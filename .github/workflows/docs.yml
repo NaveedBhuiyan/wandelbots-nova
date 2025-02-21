@@ -18,11 +18,16 @@ jobs:
         with:
           python-version: '3.x'  # Use a compatible Python version
 
-      - name: Install pdoc
-        run: pip install pdoc
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: poetry install --no-root  # Install project dependencies
 
       - name: Generate documentation
-        run: pdoc nova -o ./docs  # Adjust this command if needed
+        run: |
+          source $(poetry env info --path)/bin/activate  # Activate Poetry virtual environment
+          pdoc nova -o ./docs  # Generate documentation
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
