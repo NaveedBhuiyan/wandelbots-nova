@@ -3,7 +3,7 @@ name: Deploy Docs to GitHub Pages
 on:
   push:
     branches:
-      - main  # Change this if your default branch is different
+      - main
 
 jobs:
   deploy:
@@ -16,18 +16,19 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Use a compatible Python version
+          python-version: '3.x'
 
       - name: Install Poetry
         run: pip install poetry
 
+      - name: Add pdoc to dependencies
+        run: poetry add --dev pdoc
+
       - name: Install dependencies
-        run: poetry install --no-root  # Install project dependencies
+        run: poetry install 
 
       - name: Generate documentation
-        run: |
-          source $(poetry env info --path)/bin/activate  # Activate Poetry virtual environment
-          pdoc nova -o ./docs  # Generate documentation
+        run: poetry run pdoc nova -o ./docs
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
