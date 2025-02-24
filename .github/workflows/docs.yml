@@ -4,7 +4,7 @@ name: Deploy Docs to GitHub Pages
 on:
   push:
     branches:
-      - feature/pipeline-for-documentation
+      - main
 
 permissions:
   contents: read
